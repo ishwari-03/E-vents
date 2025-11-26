@@ -4,7 +4,7 @@ import useEmblaCarousel from "embla-carousel-react";
 import { ArrowLeft, ArrowRight } from "lucide-react"
 
 import { cn } from "@/lib/utils"
-import { Button } from "@/components/ui/button"
+import { Button } from "@/components/ux/button"
 
 const CarouselContext = React.createContext(null)
 
@@ -49,14 +49,23 @@ function Carousel({
   }, [api])
 
   const handleKeyDown = React.useCallback((event) => {
-    if (event.key === "ArrowLeft") {
+    const isVertical = orientation === "vertical"
+    const isHorizontal = orientation === "horizontal"
+    
+    if (isHorizontal && event.key === "ArrowLeft") {
       event.preventDefault()
       scrollPrev()
-    } else if (event.key === "ArrowRight") {
+    } else if (isHorizontal && event.key === "ArrowRight") {
+      event.preventDefault()
+      scrollNext()
+    } else if (isVertical && event.key === "ArrowUp") {
+      event.preventDefault()
+      scrollPrev()
+    } else if (isVertical && event.key === "ArrowDown") {
       event.preventDefault()
       scrollNext()
     }
-  }, [scrollPrev, scrollNext])
+  }, [scrollPrev, scrollNext, orientation])
 
   React.useEffect(() => {
     if (!api || !setApi) return
@@ -70,10 +79,10 @@ function Carousel({
     api.on("select", onSelect)
 
     return () => {
+      api?.off("reInit", onSelect)
       api?.off("select", onSelect)
     };
   }, [api, onSelect])
-
   return (
     <CarouselContext.Provider
       value={{
