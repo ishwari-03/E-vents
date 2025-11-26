@@ -1,7 +1,9 @@
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
-import { ThemeProvider } from "@/components/ui/theme-provider";
-import Header from "@/components/ui/Header";
+import ThemeProvider from "./ui/theme-provider";
+import { ConvexClientProvider } from "./ConvexClientProvider";
+import Header from "./ui/Header";
+import { ClerkProvider } from "@clerk/nextjs";
 
 
 
@@ -13,13 +15,18 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body className="bg-linear-to-br from-gray-950 via-zinc-900 to-stone-900 text-white">
+      <body className="bg-gradient-to-br from-white via-blue-50 to-blue-100 text-gray-900">
+<ClerkProvider >
+
         <ThemeProvider
             attribute="class"
             defaultTheme="system"
             enableSystem
             disableTransitionOnChange
           >
+            
+            <ConvexClientProvider>
+              
            { /*header*/}
            <Header />
           
@@ -32,11 +39,15 @@ export default function RootLayout({ children }) {
           <div className="relative z-10 min-h-[70vh]">{children}</div>
 
           {/*footer*/}
-          <footer className="border-t border-gray-700 py-4 px-6 max-w-7xl">
+          <footer className="border-t border-gray-200 py-4 px-6 max-w-7xl">
             <div className="text-sm text-gray-500">Created by ish</div>
           </footer>
           </main>
+          
+          </ConvexClientProvider>
+         
             </ThemeProvider>
+             </ClerkProvider>
       </body>
     </html>
   );
