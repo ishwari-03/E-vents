@@ -4,6 +4,7 @@ import ThemeProvider from "./ui/theme-provider";
 import { ConvexClientProvider } from "./ConvexClientProvider";
 import Header from "./ui/Header";
 import { ClerkProvider } from "@clerk/nextjs";
+import { Toaster } from "sonner";
 
 
 
@@ -42,6 +43,7 @@ export default function RootLayout({ children }) {
           <footer className="border-t border-gray-200 py-4 px-6 max-w-7xl">
             <div className="text-sm text-gray-500">Created by ish</div>
           </footer>
+          <Toaster position='top-center' richColors/>
           </main>
           
           </ConvexClientProvider>

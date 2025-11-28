@@ -15,14 +15,13 @@ export default defineSchema({
 
     // Attendee preferences (from onboarding)
     location: v.optional(
-      v.object({
-        city: v.string(),
-        state: v.optional(v.string()), // Added state field
-        country: v.string(),
-      })
-    ),
+    v.object({
+    city: v.optional(v.string()),   // <-- FIXED
+    state: v.string(),
+    country: v.string(),
+  })
+),
     interests: v.optional(v.array(v.string())), // Min 3 categories
-
     // Organizer tracking (User Subscription)
     freeEventsCreated: v.number(), // Track free event limit (1 free)
 
